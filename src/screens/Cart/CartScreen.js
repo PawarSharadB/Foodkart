@@ -2,12 +2,18 @@ import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 // Redux
-import {removeItemFromCart} from '../../Redux/slices/cartSlice';
+import {
+  removeItemFromCart,
+  decreaseItemQuantity,
+} from '../../Redux/slices/cartSlice';
 // Components
 import MenuItem from '../../components/MenuItem/MenuItem';
 
 const TotalPrice = ({items}) => {
-  const itemSubtotal = items.reduce((total, item) => total + item.price, 0);
+  const itemSubtotal = items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
   const taxRate = 0.1; // Example tax rate (10%)
   const taxAmount = itemSubtotal * taxRate;
   const grandTotal = itemSubtotal + taxAmount;
@@ -35,6 +41,7 @@ const CartScreen = () => {
     <MenuItem
       buttonTitle="Remove"
       onPress={() => dispatch(removeItemFromCart(item.id))}
+      onLongPress={() => dispatch(decreaseItemQuantity(item.id))}
       {...item}
     />
   );

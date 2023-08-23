@@ -13,6 +13,7 @@ const MenuItem = props => {
     type,
     onPress,
     buttonTitle,
+    quantity,
   } = props;
   return (
     <View style={styles.container}>
@@ -26,6 +27,7 @@ const MenuItem = props => {
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.price}>Price: Rs.{price}</Text>
+        {quantity !== undefined && <Text>Quantity: {quantity}</Text>}
         {description && (
           <Text numberOfLines={3} style={styles.description}>
             {description}
